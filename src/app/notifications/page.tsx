@@ -70,21 +70,21 @@ export default function NotificationsPage() {
   return (
     <div className="space-y-6">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <h1 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
-            <Bell className="w-7 h-7 text-blue-600" />
+          <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2 sm:gap-2.5">
+            <Bell className="w-6 h-6 sm:w-7 sm:h-7 text-blue-600" />
             Automated Notification Center
           </h1>
-          <p className="text-sm text-slate-500 mt-1">
-            Dispatch rules engine, WhatsApp simulation, SMS gateways and multi-channel audit trail.
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+            Dispatch rules engine, SMS gateways, Email alerts and multi-channel compliance audit trail.
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
           <button
             onClick={handleExportCSV}
-            className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 rounded-xl transition shadow-2xs"
+            className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 rounded-xl transition shadow-2xs"
           >
             <Download className="w-4 h-4 text-slate-500" />
             <span>Export Delivery Log</span>
@@ -93,9 +93,9 @@ export default function NotificationsPage() {
       </div>
 
       {/* 4 Active Notification Rules Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {/* Rule 1 */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
+        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded">
               Rule #1
@@ -104,7 +104,7 @@ export default function NotificationsPage() {
           </div>
           <h4 className="font-bold text-slate-900 text-sm">Early Warning Notice</h4>
           <p className="text-[11px] text-slate-500 leading-relaxed">
-            Dispatches WhatsApp & Email to employee with automated renewal checklist and CCHI portal status.
+            Dispatches automated SMS & Email alerts with renewal checklist and CCHI portal status.
           </p>
           <div className="pt-2 flex items-center gap-1.5 text-[10px] font-bold text-emerald-600">
             <Zap className="w-3.5 h-3.5" />
@@ -113,7 +113,7 @@ export default function NotificationsPage() {
         </div>
 
         {/* Rule 2 */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
+        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2 py-0.5 rounded">
               Rule #2
@@ -122,7 +122,7 @@ export default function NotificationsPage() {
           </div>
           <h4 className="font-bold text-slate-900 text-sm">Critical Window Alert</h4>
           <p className="text-[11px] text-slate-500 leading-relaxed">
-            High-priority WhatsApp message sent to employee & company fleet manager alerting Jawazat renewal queue.
+            High-priority dispatch sent to employee & fleet operations manager alerting Jawazat renewal queue.
           </p>
           <div className="pt-2 flex items-center gap-1.5 text-[10px] font-bold text-emerald-600">
             <Zap className="w-3.5 h-3.5" />
@@ -131,7 +131,7 @@ export default function NotificationsPage() {
         </div>
 
         {/* Rule 3 */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
+        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-bold uppercase tracking-wider text-rose-600 bg-rose-50 px-2 py-0.5 rounded">
               Rule #3
@@ -149,7 +149,7 @@ export default function NotificationsPage() {
         </div>
 
         {/* Rule 4 */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
+        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2 py-0.5 rounded">
               Rule #4
@@ -168,7 +168,7 @@ export default function NotificationsPage() {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-2xs flex flex-col lg:flex-row gap-3 items-center justify-between">
+      <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/90 shadow-2xs flex flex-col lg:flex-row gap-3 items-stretch lg:items-center justify-between">
         <div className="relative w-full lg:w-72">
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
           <input
@@ -179,21 +179,21 @@ export default function NotificationsPage() {
               setPage(1);
             }}
             placeholder="Search notifications, employee, text..."
-            className="w-full pl-9 pr-3 py-1.5 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50/50"
+            className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50/50"
           />
         </div>
 
-        <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 w-full lg:w-auto">
           {/* Company Filter */}
-          <div className="flex items-center gap-1.5 text-xs text-slate-600">
-            <Building2 className="w-3.5 h-3.5 text-slate-400" />
+          <div className="flex-1 sm:flex-none flex items-center gap-1.5 text-xs text-slate-600">
+            <Building2 className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
             <select
               value={selectedCompanyId}
               onChange={(e) => {
                 setSelectedCompanyId(e.target.value);
                 setPage(1);
               }}
-              className="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1 text-xs font-semibold text-slate-800 focus:outline-none"
+              className="w-full sm:w-auto bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-800 focus:outline-none"
             >
               <option value="all">All Companies</option>
               {companies.map((c) => (
@@ -205,20 +205,20 @@ export default function NotificationsPage() {
           </div>
 
           {/* Channel Filter */}
-          <div className="flex items-center gap-1.5 text-xs text-slate-600">
-            <Filter className="w-3.5 h-3.5 text-slate-400" />
+          <div className="flex-1 sm:flex-none flex items-center gap-1.5 text-xs text-slate-600">
+            <Filter className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
             <select
               value={channelFilter}
               onChange={(e) => {
                 setChannelFilter(e.target.value);
                 setPage(1);
               }}
-              className="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1 text-xs font-semibold text-slate-800 focus:outline-none"
+              className="w-full sm:w-auto bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-800 focus:outline-none"
             >
               <option value="ALL">All Channels</option>
-              <option value="WHATSAPP">WhatsApp</option>
-              <option value="EMAIL">Email</option>
               <option value="SMS">SMS Gateway</option>
+              <option value="EMAIL">Email</option>
+              <option value="WHATSAPP">WhatsApp</option>
             </select>
           </div>
         </div>
@@ -226,8 +226,15 @@ export default function NotificationsPage() {
 
       {/* Notifications Table */}
       <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse text-xs">
+        {/* Mobile Swipe Notice */}
+        <div className="md:hidden px-4 py-2 bg-slate-50 border-b border-slate-200 text-[11px] text-slate-500 font-medium text-center flex items-center justify-center gap-1.5">
+          <span>←</span>
+          <span>Swipe horizontally to view full delivery log</span>
+          <span>→</span>
+        </div>
+
+        <div className="overflow-x-auto scrollbar-thin">
+          <table className="w-full min-w-[780px] text-left border-collapse text-xs">
             <thead>
               <tr className="bg-slate-50/80 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider">
                 <th className="py-3.5 px-4">Recipient Employee</th>
@@ -322,7 +329,7 @@ export default function NotificationsPage() {
         </div>
 
         {/* Pagination Footer */}
-        <div className="p-4 bg-slate-50/60 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
+        <div className="p-3.5 sm:p-4 bg-slate-50/60 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
           <div>
             Showing {(page - 1) * pageSize + 1} to {Math.min(page * pageSize, filtered.length)} of {filtered.length} logs
           </div>
@@ -330,7 +337,7 @@ export default function NotificationsPage() {
             <button
               disabled={page === 1}
               onClick={() => setPage((p) => Math.max(1, p - 1))}
-              className="px-3 py-1 rounded-lg border border-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white"
+              className="px-3 py-1 rounded-lg border border-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white transition"
             >
               Previous
             </button>
@@ -340,7 +347,7 @@ export default function NotificationsPage() {
             <button
               disabled={page >= totalPages}
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-              className="px-3 py-1 rounded-lg border border-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white"
+              className="px-3 py-1 rounded-lg border border-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white transition"
             >
               Next
             </button>

@@ -43,9 +43,9 @@ export function DashboardFeeds() {
 
   return (
     <>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mt-4 sm:mt-6">
         {/* 1. Upcoming Expiry Alerts Radar */}
-        <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs flex flex-col">
+        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-5 shadow-xs flex flex-col">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100">
             <div className="flex items-center gap-2">
               <div className="p-2 rounded-xl bg-amber-50 text-amber-600">
@@ -94,7 +94,7 @@ export function DashboardFeeds() {
         </div>
 
         {/* 2. Recent Employee Additions */}
-        <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs flex flex-col">
+        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-5 shadow-xs flex flex-col">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100">
             <div className="flex items-center gap-2">
               <div className="p-2 rounded-xl bg-blue-50 text-blue-600">
@@ -143,7 +143,7 @@ export function DashboardFeeds() {
         </div>
 
         {/* 3. System Audit Trail */}
-        <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs flex flex-col">
+        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-5 shadow-xs flex flex-col">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100">
             <div className="flex items-center gap-2">
               <div className="p-2 rounded-xl bg-purple-50 text-purple-600">

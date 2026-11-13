@@ -10,6 +10,7 @@ import {
   LogOut,
   ExternalLink,
   ChevronDown,
+  Menu,
 } from "lucide-react";
 import { useSuperHR } from "@/context/SuperHRContext";
 import Link from "next/link";
@@ -23,6 +24,8 @@ export function Header() {
     setGlobalSearchQuery,
     notifications,
     resetToDemoData,
+    isMobileMenuOpen,
+    setIsMobileMenuOpen,
   } = useSuperHR();
 
   const [isNotifOpen, setIsNotifOpen] = useState(false);
@@ -47,17 +50,25 @@ export function Header() {
   const unreadCount = notifications.length;
 
   return (
-    <header className="sticky top-0 z-20 h-16 bg-white/95 backdrop-blur-md border-b border-slate-200/90 px-6 flex items-center justify-between shadow-xs">
-      {/* Left: Global Search & Active Company Filter */}
-      <div className="flex items-center gap-4 flex-1 max-w-2xl">
-        <div className="relative w-full max-w-md">
+    <header className="sticky top-0 z-20 h-16 bg-white/95 backdrop-blur-md border-b border-slate-200/90 px-3 sm:px-6 flex items-center justify-between shadow-xs">
+      {/* Left: Mobile Menu Toggle & Global Search */}
+      <div className="flex items-center gap-2 sm:gap-4 flex-1 max-w-2xl min-w-0">
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="lg:hidden p-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition shrink-0"
+          aria-label="Toggle Navigation Menu"
+        >
+          <Menu className="w-5 h-5" />
+        </button>
+
+        <div className="relative w-full max-w-md min-w-0">
           <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={globalSearchQuery}
             onChange={(e) => setGlobalSearchQuery(e.target.value)}
-            placeholder="Search employees, Iqama, CR, documents... (Ctrl + /)"
-            className="w-full pl-10 pr-4 py-2 bg-slate-100/80 hover:bg-slate-100 focus:bg-white text-sm text-slate-800 placeholder-slate-400 rounded-xl border border-transparent focus:border-blue-500 focus:ring-3 focus:ring-blue-500/10 transition-all outline-hidden"
+            placeholder="Search employees, Iqama, CR..."
+            className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2 bg-slate-100/80 hover:bg-slate-100 focus:bg-white text-xs sm:text-sm text-slate-800 placeholder-slate-400 rounded-xl border border-transparent focus:border-blue-500 focus:ring-3 focus:ring-blue-500/10 transition-all outline-hidden truncate"
           />
         </div>
 
@@ -81,7 +92,7 @@ export function Header() {
       </div>
 
       {/* Right: Actions, Notifications, Profile */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
         {/* Reset Demo Data Pill */}
         <button
           onClick={resetToDemoData}
@@ -105,7 +116,7 @@ export function Header() {
           </button>
 
           {isNotifOpen && (
-            <div className="absolute right-0 mt-2 w-96 bg-white rounded-2xl shadow-2xl border border-slate-200/90 py-2 z-50 animate-in fade-in slide-in-from-top-2">
+            <div className="absolute right-[-40px] sm:right-0 mt-2 w-[calc(100vw-24px)] max-w-sm sm:w-96 bg-white rounded-2xl shadow-2xl border border-slate-200/90 py-2 z-50 animate-in fade-in slide-in-from-top-2">
               <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
                 <div>
                   <h4 className="text-sm font-bold text-slate-900">Notifications & Alerts</h4>

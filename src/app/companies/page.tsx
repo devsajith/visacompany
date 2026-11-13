@@ -205,53 +205,53 @@ export default function CompaniesPage() {
       {activeCompany ? (
         <div className="space-y-6 animate-in fade-in">
           {/* Back Navigation Bar */}
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <button
               onClick={() => {
                 setActiveCompany(null);
                 setSelectedCompanyId("all");
                 setPage(1);
               }}
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-xs font-bold text-slate-700 transition shadow-2xs"
+              className="inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-xs font-bold text-slate-700 transition shadow-2xs w-full sm:w-auto"
             >
               <ArrowLeft className="w-4 h-4 text-blue-600" />
               <span>Back to All 12 Companies</span>
             </button>
 
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
               <button
                 onClick={handleExportCompanyEmployeesCSV}
-                className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 rounded-xl transition shadow-2xs"
+                className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 rounded-xl transition shadow-2xs"
               >
                 <Download className="w-4 h-4 text-slate-500" />
-                <span>Export Expiry Audit CSV</span>
+                <span>Export CSV</span>
               </button>
               <button
                 onClick={() => setIsAddEmployeeOpen(true)}
-                className="flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition shadow-md shadow-blue-600/20"
+                className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition shadow-md shadow-blue-600/20"
               >
                 <Plus className="w-4 h-4" />
-                <span>Add Employee to {activeCompany.code}</span>
+                <span>Add Employee</span>
               </button>
             </div>
           </div>
 
           {/* Company Context Header Card */}
-          <div className="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 rounded-3xl p-6 text-white shadow-xl relative overflow-hidden">
+          <div className="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-6 text-white shadow-xl relative overflow-hidden">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
-              <div className="flex items-start gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-blue-600/30 border border-blue-400/30 flex items-center justify-center text-white font-black text-xl flex-shrink-0 shadow-lg">
+              <div className="flex items-start gap-3 sm:gap-4">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-blue-600/30 border border-blue-400/30 flex items-center justify-center text-white font-black text-lg sm:text-xl flex-shrink-0 shadow-lg">
                   {activeCompany.code}
                 </div>
                 <div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500 text-white">
                       {activeCompany.status}
                     </span>
                     <span className="text-xs text-blue-300 font-mono">CR: {activeCompany.crNumber}</span>
                     <span className="text-xs text-slate-400">• {activeCompany.city}, KSA</span>
                   </div>
-                  <h1 className="text-2xl font-black tracking-tight mt-1">{activeCompany.name}</h1>
+                  <h1 className="text-xl sm:text-2xl font-black tracking-tight mt-1">{activeCompany.name}</h1>
                   <p className="text-xs text-slate-300 mt-1">
                     Workforce directory with live Visa, Iqama, Driving license, Passport, and Insurance status.
                   </p>
@@ -259,30 +259,30 @@ export default function CompaniesPage() {
               </div>
 
               {/* Quick Summary Pill Counters */}
-              <div className="flex flex-wrap items-center gap-3">
-                <div className="px-4 py-2 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 text-center">
+              <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 sm:gap-3 w-full md:w-auto">
+                <div className="px-3 sm:px-4 py-2 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 text-center">
                   <span className="text-[10px] text-slate-300 block font-bold uppercase">Total Staff</span>
-                  <span className="text-xl font-black text-white">{activeCompanyStats.total}</span>
+                  <span className="text-lg sm:text-xl font-black text-white">{activeCompanyStats.total}</span>
                 </div>
                 <div
                   onClick={() => setExpiryStatusFilter("EXPIRED")}
-                  className="px-4 py-2 rounded-2xl bg-red-500/20 backdrop-blur-md border border-red-500/30 text-center cursor-pointer hover:bg-red-500/30 transition"
+                  className="px-3 sm:px-4 py-2 rounded-2xl bg-red-500/20 backdrop-blur-md border border-red-500/30 text-center cursor-pointer hover:bg-red-500/30 transition"
                   title="Filter Expired"
                 >
                   <span className="text-[10px] text-red-300 block font-bold uppercase">Expired Papers</span>
-                  <span className="text-xl font-black text-red-400">{activeCompanyStats.expired}</span>
+                  <span className="text-lg sm:text-xl font-black text-red-400">{activeCompanyStats.expired}</span>
                 </div>
                 <div
                   onClick={() => setExpiryStatusFilter("30DAYS")}
-                  className="px-4 py-2 rounded-2xl bg-amber-500/20 backdrop-blur-md border border-amber-500/30 text-center cursor-pointer hover:bg-amber-500/30 transition"
+                  className="px-3 sm:px-4 py-2 rounded-2xl bg-amber-500/20 backdrop-blur-md border border-amber-500/30 text-center cursor-pointer hover:bg-amber-500/30 transition"
                   title="Filter Expiring Soon"
                 >
                   <span className="text-[10px] text-amber-300 block font-bold uppercase">&le; 30d Warning</span>
-                  <span className="text-xl font-black text-amber-400">{activeCompanyStats.urgent}</span>
+                  <span className="text-lg sm:text-xl font-black text-amber-400">{activeCompanyStats.urgent}</span>
                 </div>
                 <div
                   onClick={() => setExpiryStatusFilter("VALID")}
-                  className="px-4 py-2 rounded-2xl bg-emerald-500/20 backdrop-blur-md border border-emerald-500/30 text-center cursor-pointer hover:bg-emerald-500/30 transition"
+                  className="px-3 sm:px-4 py-2 rounded-2xl bg-emerald-500/20 backdrop-blur-md border border-emerald-500/30 text-center cursor-pointer hover:bg-emerald-500/30 transition"
                   title="Filter Valid"
                 >
                   <span className="text-[10px] text-emerald-300 block font-bold uppercase">Valid Papers</span>
@@ -340,9 +340,13 @@ export default function CompaniesPage() {
           </div>
 
           {/* Company Employee Table with Visa and Paper Expiries Mentioned */}
-          <div className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse text-xs">
+          <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-2xs overflow-hidden">
+            <div className="px-4 py-2.5 bg-slate-50 border-b border-slate-200/80 text-[11px] text-slate-500 font-medium flex items-center justify-between lg:hidden">
+              <span className="font-bold text-slate-700">Workforce List ({companyEmployees.length})</span>
+              <span className="text-blue-600 font-semibold flex items-center gap-1">← Swipe to view expiries →</span>
+            </div>
+            <div className="overflow-x-auto scrollbar-thin">
+              <table className="w-full text-left border-collapse text-xs min-w-[880px]">
                 <thead>
                   <tr className="bg-slate-50/80 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider">
                     <th className="py-3.5 px-4">Employee</th>
@@ -543,17 +547,17 @@ export default function CompaniesPage() {
               </p>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 w-full sm:w-auto">
               <button
                 onClick={handleExportCompaniesCSV}
-                className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 rounded-xl transition shadow-2xs"
+                className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 rounded-xl transition shadow-2xs"
               >
                 <Download className="w-4 h-4 text-slate-500" />
-                <span>Export Companies CSV</span>
+                <span>Export CSV</span>
               </button>
               <button
                 onClick={() => setIsAddCompanyOpen(true)}
-                className="flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition shadow-md shadow-blue-600/20"
+                className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition shadow-md shadow-blue-600/20"
               >
                 <Plus className="w-4 h-4" />
                 <span>Add Company</span>
@@ -621,9 +625,13 @@ export default function CompaniesPage() {
           </div>
 
           {/* Companies Cards & Table Grid */}
-          <div className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse text-xs">
+          <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-2xs overflow-hidden">
+            <div className="px-4 py-2.5 bg-slate-50 border-b border-slate-200/80 text-[11px] text-slate-500 font-medium flex items-center justify-between lg:hidden">
+              <span className="font-bold text-slate-700">All Entities ({filteredCompanies.length})</span>
+              <span className="text-blue-600 font-semibold flex items-center gap-1">← Swipe to view details →</span>
+            </div>
+            <div className="overflow-x-auto scrollbar-thin">
+              <table className="w-full text-left border-collapse text-xs min-w-[780px]">
                 <thead>
                   <tr className="bg-slate-50/80 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider">
                     <th className="py-3.5 px-4">Company Entity</th>

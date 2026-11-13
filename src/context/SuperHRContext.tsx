@@ -69,6 +69,10 @@ interface SuperHRContextType {
   updateSettings: (newSettings: Partial<SystemSettings>) => void;
   resetToDemoData: () => void;
 
+  // Mobile navigation drawer
+  isMobileMenuOpen: boolean;
+  setIsMobileMenuOpen: (open: boolean) => void;
+
   // UI / Toasts
   toasts: ToastMessage[];
   showToast: (toast: Omit<ToastMessage, "id">) => void;
@@ -125,6 +129,7 @@ export function SuperHRProvider({ children }: { children: React.ReactNode }) {
   const [selectedCompanyId, setSelectedCompanyId] = useState<string>("all");
   const [globalSearchQuery, setGlobalSearchQuery] = useState<string>("");
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   const [whatsAppPreviewData, setWhatsAppPreviewData] = useState<{
     isOpen: boolean;
@@ -542,6 +547,8 @@ export function SuperHRProvider({ children }: { children: React.ReactNode }) {
         dispatchNotification,
         updateSettings,
         resetToDemoData,
+        isMobileMenuOpen,
+        setIsMobileMenuOpen,
         toasts,
         showToast,
         dismissToast,

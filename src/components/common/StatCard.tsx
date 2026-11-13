@@ -68,18 +68,18 @@ export function StatCard({
   return (
     <div
       onClick={onClick}
-      className={`group relative bg-white rounded-2xl p-5 shadow-xs border transition-all duration-200 ${
+      className={`group relative bg-white rounded-2xl p-4 sm:p-5 shadow-xs border transition-all duration-200 ${
         schemeStyles.border
       } ${schemeStyles.ring} ${onClick ? "cursor-pointer hover:shadow-md hover:-translate-y-0.5" : ""}`}
     >
-      <div className="flex items-start justify-between">
-        <div className="flex-1">
-          <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">{title}</p>
-          <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-2xl font-black tracking-tight text-slate-900">{value}</span>
+      <div className="flex items-start justify-between gap-2">
+        <div className="flex-1 min-w-0">
+          <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-slate-500 truncate">{title}</p>
+          <div className="mt-1.5 sm:mt-2 flex flex-wrap items-baseline gap-1.5 sm:gap-2">
+            <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900">{value}</span>
             {trend && (
               <span
-                className={`inline-flex items-center text-xs font-semibold px-1.5 py-0.5 rounded-md ${
+                className={`inline-flex items-center text-[10px] sm:text-xs font-semibold px-1.5 py-0.5 rounded-md ${
                   trend.isPositive ? "bg-emerald-100 text-emerald-800" : "bg-rose-100 text-rose-800"
                 }`}
               >
@@ -92,11 +92,11 @@ export function StatCard({
               </span>
             )}
           </div>
-          {subtitle && <p className="text-xs text-slate-500 mt-1 font-medium">{subtitle}</p>}
+          {subtitle && <p className="text-[11px] sm:text-xs text-slate-500 mt-1 font-medium truncate">{subtitle}</p>}
         </div>
 
-        <div className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-lg ${schemeStyles.iconBg}`}>
-          <Icon className="w-6 h-6" />
+        <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shadow-lg shrink-0 ${schemeStyles.iconBg}`}>
+          <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
         </div>
       </div>
     </div>

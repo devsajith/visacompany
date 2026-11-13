@@ -21,13 +21,13 @@ export default function RootLayout({
       <body className="bg-slate-100/70 text-slate-900 antialiased font-sans">
         <SuperHRProvider>
           <div className="flex min-h-screen">
-            <Suspense fallback={<div className="w-64 bg-[#0b1728]" />}>
+            <Suspense fallback={<div className="hidden lg:block w-64 bg-[#0b1728]" />}>
               <Sidebar />
             </Suspense>
-            <div className="flex-1 flex flex-col min-w-0">
+            <div className="flex-1 flex flex-col min-w-0 w-full">
               <Header />
-              <main className="flex-1 p-6 lg:p-8 overflow-y-auto">
-                <Suspense fallback={<div className="p-8 text-slate-400">Loading...</div>}>
+              <main className="flex-1 p-3 sm:p-5 lg:p-8 overflow-y-auto w-full min-w-0">
+                <Suspense fallback={<div className="p-4 sm:p-8 text-slate-400">Loading...</div>}>
                   {children}
                 </Suspense>
               </main>
