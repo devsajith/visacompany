@@ -1,0 +1,274 @@
+// Super HR - Multi-Company Workforce Management System
+// Prisma Schema Definition for PostgreSQL Production Implementation
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum TenantStatus {
+  ACTIVE
+  SUSPENDED
+  EXPIRED
+}
+
+enum CompanyStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum EmploymentStatus {
+  ACTIVE
+  INACTIVE
+  ON_LEAVE
+  PROBATION
+}
+
+enum EmploymentType {
+  FULL_TIME
+  CONTRACT
+  TEMPORARY
+}
+
+enum InsuranceStatus {
+  ACTIVE
+  EXPIRING_SOON
+  EXPIRED
+}
+
+enum ChannelType {
+  WHATSAPP
+  EMAIL
+  SMS
+}
+
+enum DeliveryStatus {
+  DELIVERED
+  SENT
+  FAILED
+  READ
+}
+
+// 1. Central Tenant (Holding Organization)
+model Tenant {
+  id          String       @id @default(uuid())
+  name        String
+  domain      String       @unique
+  status      TenantStatus @default(ACTIVE)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  companies     Company[]
+  users         User[]
+  roles         Role[]
+  auditLogs     AuditLog[]
+  notifications NotificationLog[]
+
+  @@map("tenants")
+}
+
+// 2. Company Entity (12 Subsidiaries in KSA)
+model Company {
+  id            String        @id @default(uuid())
+  tenantId      String
+  tenant        Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  name          String
+  code          String
+  crNumber      String        @unique // Saudi Commercial Registration (10 digits)
+  taxNumber     String?       // ZATCA VAT Number
+  contactPerson String
+  phone         String
+  email         String
+  address       String
+  city          String
+  status        CompanyStatus @default(ACTIVE)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  employees     Employee[]
+  insurances    InsuranceRecord[]
+  documents     DocumentRecord[]
+  auditLogs     AuditLog[]
+  notifications NotificationLog[]
+
+  @@index([tenantId])
+  @@index([crNumber])
+  @@map("companies")
+}
+
+// 3. User Account
+model User {
+  id           String     @id @default(uuid())
+  tenantId     String
+  tenant       Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  email        String     @unique
+  passwordHash String
+  fullName     String
+  roleId       String
+  role         Role       @relation(fields: [roleId], references: [id])
+  phone        String?
+  isActive     Boolean    @default(true)
+  lastLoginAt  DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@index([tenantId])
+  @@map("users")
+}
+
+// 5. Role & Permission Definitions
+model Role {
+  id          String   @id @default(uuid())
+  tenantId    String
+  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  name        String   // SUPER_ADMIN, COMPANY_HR_MANAGER, OPERATIONS_AUDITOR
+  description String?
+  permissions Json     // Granular permission flags: { "companies": ["read", "write"], "documents": ["read", "verify"] }
+  createdAt   DateTime @default(now())
+
+  users       User[]
+
+  @@index([tenantId])
+  @@map("roles")
+}
+
+// 5. Employee Record
+model Employee {
+  id                 String           @id @default(uuid())
+  companyId          String
+  company            Company          @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  employeeId         String           @unique // e.g., SL-1001
+  fullName           String
+  arabicName         String?
+  avatarUrl          String?
+  gender             String
+  nationality        String
+  dateOfBirth        DateTime
+  phone              String
+  email              String
+  nationalId         String           @unique // Saudi ID or Iqama (10 digits)
+  designation        String
+  department         String
+  joiningDate        DateTime
+  employmentType     EmploymentType   @default(FULL_TIME)
+  employmentStatus   EmploymentStatus @default(ACTIVE)
+
+  // Document Expirations
+  iqamaExpiry        DateTime
+  passportExpiry     DateTime
+  licenseExpiry      DateTime
+  contractExpiry     DateTime
+  insuranceExpiry    DateTime
+
+  emergencyContact   Json?
+
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+
+  insurances         InsuranceRecord[]
+  documents          DocumentRecord[]
+  notifications      NotificationLog[]
+
+  @@index([companyId])
+  @@index([nationalId])
+  @@index([iqamaExpiry])
+  @@index([licenseExpiry])
+  @@index([insuranceExpiry])
+  @@map("employees")
+}
+
+// 7. Insurance Record
+model InsuranceRecord {
+  id           String          @id @default(uuid())
+  employeeId   String
+  employee     Employee        @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  companyId    String
+  company      Company         @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  provider     String          // Bupa, Tawuniya, Medgulf
+  policyNumber String
+  memberId     String
+  category     String          // Class A, VIP
+  startDate    DateTime
+  expiryDate   DateTime
+  status       InsuranceStatus @default(ACTIVE)
+  premiumSAR   Decimal         @db.Decimal(10, 2)
+  documentUrl  String?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  @@index([employeeId])
+  @@index([companyId])
+  @@index([expiryDate])
+  @@map("insurance_records")
+}
+
+// 9. Document Record
+model DocumentRecord {
+  id             String   @id @default(uuid())
+  employeeId     String
+  employee       Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  companyId      String
+  company        Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  documentType   String
+  documentNumber String
+  issueDate      DateTime
+  expiryDate     DateTime
+  fileName       String
+  fileSize       String
+  fileUrl        String?
+  uploadedAt     DateTime @default(now())
+
+  @@index([employeeId])
+  @@index([companyId])
+  @@index([expiryDate])
+  @@map("document_records")
+}
+
+// 10. Notification Delivery Log
+model NotificationLog {
+  id               String         @id @default(uuid())
+  tenantId         String
+  tenant           Tenant         @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  companyId        String
+  company          Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  employeeId       String
+  employee         Employee       @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  notificationType String
+  documentType     String
+  expiryDate       DateTime
+  dateSent         DateTime       @default(now())
+  channel          ChannelType
+  status           DeliveryStatus @default(SENT)
+  messagePreview   String
+  recipientPhone   String?
+  recipientEmail   String?
+
+  @@index([tenantId])
+  @@index([companyId])
+  @@index([employeeId])
+  @@map("notification_logs")
+}
+
+// 11. System Audit Trail
+model AuditLog {
+  id        String   @id @default(uuid())
+  tenantId  String
+  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  companyId String?
+  company   Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  timestamp DateTime @default(now())
+  actorName String
+  actorRole String
+  action    String
+  target    String
+  details   String
+  ipAddress String?
+
+  @@index([tenantId])
+  @@index([companyId])
+  @@map("audit_logs")
+}
